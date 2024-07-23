@@ -3,6 +3,7 @@ import Post from "../models/post.js";
 import controlloMail from "../middlewares/controlloMail.js";
 import upload from "../middlewares/upload.js";
 import cloudinaryUploader from "../config/cloudinaryConfig.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -81,30 +82,7 @@ router.get("/:id", async (req, res) => {
     }
 })
 
-// router.post("/", async (req, res) => {
-
-//     const post = new Post(req.body);
-
-//     try {
-
-//         const newPost = await post.save();
-
-//         res
-//             .status(201)
-//             .json({
-//                 newPost,
-//                 message: "Nuovo post aggiunto"
-//             });
-
-//     } catch (error) {
-
-//         res
-//             .status(400)
-//             .json({
-//                 message: error.message
-//         });
-//     }
-// })
+router.use(authMiddleware);
 
 router.post( '/', cloudinaryUploader.single('cover', async (req, res) => {
     try{

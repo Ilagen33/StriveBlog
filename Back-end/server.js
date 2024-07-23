@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import authorRoutes from './routes/authorRoutes.js'
 import postRoutes from './routes/postRoutes.js';
+import loginRoutes from './routes/loginRoutes.js'
 import cors from "cors";
 import {
     badRequestHandler,
@@ -34,6 +35,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use("/api/authors", authorRoutes);
 app.use ("/api/posts", postRoutes);
+app.use("/api/auth", loginRoutes);
+
 app.use(badRequestHandler);
 app.use(authorizedHandler);
 app.use(notFoundHandler);

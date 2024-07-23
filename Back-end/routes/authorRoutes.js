@@ -107,16 +107,17 @@ router.get("/:id/Posts", async (req, res) => {
 
 router.post("/", async (req, res) => {
 
-    const author = new Author(req.body); //crea un nuovo autore prendendo i dati dal corpo della richiesta
-
     try {
 
+        const author = new Author(req.body); //crea un nuovo autore prendendo i dati dal corpo della richiesta
         const newAuthor = await author.save();
-
+        const authorResponse = newAuthor.toObject();
+        delete authorResponse.password;
+        
         res
             .status(201)
             .json({
-                newAuthor,
+                authorResponse,
                 message: "Nuovo autore aggiunto"
             });
 
